@@ -11,9 +11,14 @@ class AdsDevice(AdsClient):
         AdsClient.__init__(self, adsConnection)
 
 
-    def ReadByName(self, variableName, adsDatatype):
+    def GetSymbolHandle(self, variableName):
         symbolData = self.ReadWrite(0xF003, 0x0000, 4, variableName + '\x00').Data
         symbolHandle = struct.unpack("I", symbolData)[0]
+        return symbolHandle        
+
+
+    def ReadByName(self, variableName, adsDatatype):
+        symbolHandle = self.GetSymbolHandle(variableName)
         return self.ReadByHandle(symbolHandle, adsDatatype)
         
 
@@ -24,8 +29,7 @@ class AdsDevice(AdsClient):
 
 
     def WriteByName(self, variableName, adsDatatype, value):
-        symbolData = self.ReadWrite(0x0000F003, 0x00000000, 4, variableName + chr(0)).Data
-        symbolHandle = struct.unpack("I", symbolData)[0]
+        symbolHandle = self.GetSymbolHandle(variableName)
         self.WriteByHandle(symbolHandle, adsDatatype, value)
 
 
