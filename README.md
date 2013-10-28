@@ -16,7 +16,7 @@ An AMS-ID is a free 6-byte long identifier. Mostly IP is contained. See Beckhoff
 
 ```python
 
-import pyads
+from pyads import *
 
 sourceAmsIdPort = "192.168.1.79.1.1:32780"
 targetAmsIdPort = "192.168.1.80.1.1:801"
