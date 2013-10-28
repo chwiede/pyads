@@ -105,27 +105,49 @@ class AdsClient:
         if (self.Socket == None):
             self.Connect()
         
-        self._CurrentInvokeID += 1
-        self._CurrentPacket = None
-        amspacket.InvokeID = self._CurrentInvokeID
+        # prepare packet with invoke id 
+        self.PrepareCommandInvoke(amspacket)
 
+        # send tcp-header and ams-data
+        self.Socket.send(self.GetTCPPacket(amspacket))
+        
+        # here's your packet
+        return self.AwaitCommandInvoke()
+    
+    
+    
+    def GetTCPPacket(self, amspacket):
+        
         # get ams-data and generate tcp-header
         amsData = amspacket.GetBinaryData()
         tcpHeader = self.GetTcpHeader(amsData)
-
-        # send tcp-header and ams-data
-        self.Socket.send(tcpHeader + amsData)
         
+        return tcpHeader + amsData
+    
+    
+    
+    def PrepareCommandInvoke(self, amspacket):        
+        if(self._CurrentInvokeID < 0xFFFF):
+            self._CurrentInvokeID += 1
+        else:
+            self._CurrentInvokeID = 0x8000
+            
+        self._CurrentPacket = None
+        amspacket.InvokeID = self._CurrentInvokeID
+        
+        
+        
+    def AwaitCommandInvoke(self):
         # unfortunately threading.event is slower than this oldschool poll :-(
         timeout = 0
         while (self._CurrentPacket == None):
             timeout += 0.001
             time.sleep(0.001)
             if (timeout > 3):
-                raise Exception("Timout: could not receive ADS Answer!")                    
+                raise Exception("Timout: could not receive ADS Answer!")
         
-        # here's your packet
-        return self._CurrentPacket
+        return self._CurrentPacket                    
+        
 
     
 
