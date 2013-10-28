@@ -13,13 +13,22 @@ class AdsClient:
         pass
     
     
-    AdsConnection = None
+    AdsConnection = None    
     
+    AdsPortDefault = 0xBF02    
     
-    AdsPortDefault = 0xBF02
-    
+    AdsChunkSizeDefault = 1024    
     
     Socket = None
+    
+    _CurrentInvokeID = 0x8000
+    
+    _CurrentPacket = None
+    
+    
+    @property
+    def IsConnected(self):
+        return self.Socket != None
     
     
     def Close(self):
@@ -33,35 +42,38 @@ class AdsClient:
         self.Close()
         self.Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.Socket.settimeout(3)
-        self.Socket.connect((self.AdsConnection.TargetIP, self.AdsPortDefault))        
+        self.Socket.connect((self.AdsConnection.TargetIP, self.AdsPortDefault))
+        
+        self._BeginAsyncRead()        
         
     
     
-    """
     def _BeginAsyncRead(self):
-        self.Socket.settimeout(0)
-        self.Socket.setblocking(0)
-        
-        self._AsyncReadThread = threading.Thread(target=self.Foo)
+        self._AsyncReadThread = threading.Thread(target=self._AsyncRead)
         self._AsyncReadThread.start()
         
         
-    def AsyncReadAproach(self):
-        
-        while (True):
-            ready = select.select([self.Socket], [], [], 1)
-            if ready[0]:
-                newAmsPackt = self.ReadAmsPacketFromSocket()
-                ...?
-                ...?
-                ...?            
-    """    
+    def _AsyncRead(self):
+        while (self.IsConnected):
+            ready = select.select([self.Socket], [], [], 0.1)
+            if (ready[0]):
+                try:
+                    newPacket = self.ReadAmsPacketFromSocket()
+                    if (newPacket.InvokeID == self._CurrentInvokeID):
+                        self._CurrentPacket = newPacket
+                    else:
+                        print("Packet dropped:")
+                        print(newPacket)
+                except socket.error:
+                    self.Close()
+                    break
+                            
         
     
-    def ReadAmsPacketFromSocket(self):
-        chunkSize = 1024
+    def ReadAmsPacketFromSocket(self):        
         
-        response = self.Socket.recv(chunkSize)
+        # read default buffer
+        response = self.Socket.recv(self.AdsChunkSizeDefault)
         
         # ensure correct beckhoff tcp header
         if(len(response) < 6):
@@ -75,12 +87,9 @@ class AdsClient:
         dataLen = struct.unpack('I', response[2:6])[0] + 6
         
         # read rest of data, if any
-        while (True):
-            chunk = max(0, min(chunkSize, dataLen - len(response)))
-            if(chunk > 0):
-                response += self.Socket.recv(chunk)
-            else:             
-                break
+        while (len(response) < dataLen):
+            nextReadLen = min(self.AdsChunkSizeDefault, dataLen - len(response))
+            response += self.Socket.recv(nextReadLen)
 
         # cut off tcp-header and return response amspacket
         return AmsPacket.FromBinaryData(response[6:])
@@ -96,17 +105,27 @@ class AdsClient:
         if (self.Socket == None):
             self.Connect()
         
+        self._CurrentInvokeID += 1
+        self._CurrentPacket = None
+        amspacket.InvokeID = self._CurrentInvokeID
+
         # get ams-data and generate tcp-header
         amsData = amspacket.GetBinaryData()
         tcpHeader = self.GetTcpHeader(amsData)
-        
-        self.zipfi = None
-        
+
         # send tcp-header and ams-data
         self.Socket.send(tcpHeader + amsData)
         
-        result = self.ReadAmsPacketFromSocket()
-        return result
+        # unfortunately threading.event is slower than this oldschool poll :-(
+        timeout = 0
+        while (self._CurrentPacket == None):
+            timeout += 0.001
+            time.sleep(0.001)
+            if (timeout > 3):
+                raise Exception("Timout: could not receive ADS Answer!")                    
+        
+        # here's your packet
+        return self._CurrentPacket
 
     
 
@@ -141,15 +160,3 @@ class AdsClient:
     def ReadWrite(self, indexGroup, indexOffset, readLen, dataToWrite = ''):
         return ReadWriteCommand(indexGroup, indexOffset, readLen, dataToWrite).Execute(self)
         
-    """
-    def TEST(self):
-        packet = AmsPacket(self.AdsConnection)
-        packet.CommandID = 0x0001
-        packet.StateFlags = 0x0004
-        
-        print("%s" % packet)
-        
-        foobar = self.SendAndRecv(packet)
-        
-        print("%s" % foobar)
-    """
