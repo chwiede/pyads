@@ -1,9 +1,11 @@
+import copy
 import struct
+import boxes
 from adsclient import AdsClient
 from adsdatatype import AdsDatatype
 from adsconnection import AdsConnection
 from binaryparser import BinaryParser
-from boxes import Box
+from boxes.box import Box
 
 class AdsDevice(AdsClient):
 
@@ -36,32 +38,24 @@ class AdsDevice(AdsClient):
     def WriteByHandle(self, symbolHandle, adsDatatype, value):
         valueRaw = AdsDatatype.Pack(value, adsDatatype)
         self.Write(0xF005, symbolHandle, valueRaw)
-
-
-    def ScanBoxes(self):
-        connection = AdsConnection()
-        connection.TargetIP = self.AdsConnection.TargetIP
         
-        connection.TargetAmsID = self.AdsConnection.TargetAmsID
+        
+    def GetBoxDescriptors(self):
+        connection = copy.deepcopy(self.AdsConnection)
         connection.TargetAmsPort = 100
-        
-        connection.SourceAmsID = self.AdsConnection.SourceAmsID
-        connection.SourceAmsPort = self.AdsConnection.SourceAmsPort
         
         tmpClient = AdsClient(connection)
         
         try:
-            result = []
             data = tmpClient.Read(0x00000000, 0x00090000, 512).Data
-            binary = BinaryParser(data)
-            for i in range(64):
-                boxID = binary.ReadUInt16()
-                if(boxID > 0):
-                    result.append(Box(boxID))
-            
-            return result                
-            
-        finally:            
+            descriptors = struct.unpack('H' * 256, data)
+            return filter(lambda x: x != 0, descriptors)
+        finally:
             tmpClient.Close()
+            
+
+    def GetBoxes(self):
+        descriptors = self.GetBoxDescriptors()
+        return map(lambda b: boxes.Create(b), descriptors)
             
                 

@@ -1,6 +1,54 @@
+import math
+
 class BoxType():
     
-    Unkown = 0x0000
-    DigitallyInput = 0x0001
-    DigitallyOutput = 0x0002
-    Complex = 0x0800
+    Complex = 0x0001
+    
+    DigitalIn = 0x0081
+    
+    DigitalOut = 0x0081
+    
+    Unkown = 0x8000
+    
+    
+    
+    @staticmethod
+    def GetBoxType(descriptor):
+        
+        if (BoxType.GetBoxIsDigital(descriptor)):
+            if (BoxType.GetBoxIsInput(descriptor)):
+                return BoxType.DigitalIn
+
+            if (BoxType.GetBoxIsOutput(descriptor)):
+                return BoxType.DigitalOut
+        
+        return BoxType.Complex
+
+
+    @staticmethod
+    def GetBoxIsDigital(descriptor):
+        return (descriptor & 0x8000) != 0
+    
+    
+    @staticmethod
+    def GetBoxIsInput(descriptor):
+        return (descriptor & 0x0001) != 0
+
+
+    @staticmethod
+    def GetBoxIsOutput(descriptor):
+        return (descriptor & 0x0002) != 0
+    
+    
+    @staticmethod
+    def GetChannelCount(descriptor):
+        if (not BoxType.GetBoxIsDigital(descriptor)):
+            raise Exception("Box is not digital!")
+
+        return (descriptor >> 8) & 0x003F           
+    
+    
+    @staticmethod
+    def GetBoxBitLength(descriptor):
+        channelCount = BoxType.GetChannelCount(descriptor)
+        return int(math.ceil(channelCount / 8.0) * 8)
