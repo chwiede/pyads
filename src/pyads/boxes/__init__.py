@@ -23,7 +23,7 @@ def Create(descriptor):
     moduleName = "box_%s" % descriptor
     fileDesired = "%s/%s.py" % (os.path.dirname(__file__), moduleName)
     if (os.path.isfile(fileDesired)):
-        module = __import__('box_2512', globals(), locals())
+        module = __import__(moduleName, globals(), locals())
         boxClass = getattr(module, "Box%s" % descriptor)
         return boxClass(descriptor)
     

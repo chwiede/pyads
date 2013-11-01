@@ -1,6 +1,6 @@
 from box import Box, BoxType
 
-class Box2512(Box):
+class Box9000(Box):
     
     def __init__(self, descriptor):
         Box.__init__(self, descriptor)
@@ -9,5 +9,5 @@ class Box2512(Box):
         self.BoxType = BoxType.Complex | BoxType.Input | BoxType.Output
 
 
-    #def __str__(self):
-    #    return "KL2512 PWM-Output (2 Channels)"
+    def __str__(self):
+        return "Bus Coupler BC9000"

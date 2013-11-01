@@ -6,7 +6,12 @@ class BoxDigital(Box):
     def __init__(self, descriptor):
         Box.__init__(self, descriptor)
         self.Channels = BoxType.GetChannelCount(descriptor)
-        self.ByteSize = BoxType.GetBoxBitLength(descriptor)  
+        
+        if (self.IsInput):
+            self.SizeIn = BoxType.GetBoxBitLength(descriptor)
+        
+        if (self.IsOutput):
+            self.SizeOut = BoxType.GetBoxBitLength(descriptor) 
         
         
     Channels = 0

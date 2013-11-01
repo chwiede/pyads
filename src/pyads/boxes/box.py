@@ -9,7 +9,9 @@ class Box():
         
     Offset = 0        
     
-    ByteSize = 0
+    SizeIn = 0
+    
+    SizeOut = 0
 
     Descriptor = 0
     
@@ -57,9 +59,10 @@ class Box():
 
         humanDescription = "%s %s" % (generalType, ioMode)
         
-        return "Box %s (%s, %s %s)" % (
+        return "Box %s (%s, %s/%s %s)" % (
             self.Descriptor,
             humanDescription,
-            self.ByteSize,
-            "Bytes" if (self.IsComplex) else "Channels"
+            self.SizeIn,
+            self.SizeOut,
+            "Bytes In/Out" if (self.IsComplex) else "Channels In/Out"
         )
