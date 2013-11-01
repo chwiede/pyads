@@ -12,8 +12,8 @@ class BoxDigital(Box):
     Channels = 0
     
     
-    def __str__(self):        
-        mode = "Input" if BoxType.GetBoxIsInput(self.Descriptor) else "Output"        
-        return "Digital %s Box (%s Channels)" % (mode, self.Channels)        
+    #def __str__(self):        
+    #    mode = "Input" if BoxType.GetBoxIsInput(self.Descriptor) else "Output"        
+    #    return "Digital %s Box (%s Channels)" % (mode, self.Channels)        
     
     

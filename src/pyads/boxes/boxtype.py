@@ -1,15 +1,17 @@
 import math
+from mercurial.fileset import unknown
 
 class BoxType():
     
-    Complex = 0x0001
+    Complex = 0b00000100
     
-    DigitalIn = 0x0081
+    Digital = 0b00001000
+
+    Unkown = 0b10000000
     
-    DigitalOut = 0x0081
+    Input = 0b00000001
     
-    Unkown = 0x8000
-    
+    Output = 0b00000010
     
     
     @staticmethod
@@ -17,10 +19,10 @@ class BoxType():
         
         if (BoxType.GetBoxIsDigital(descriptor)):
             if (BoxType.GetBoxIsInput(descriptor)):
-                return BoxType.DigitalIn
+                return BoxType.Digital | BoxType.Input
 
             if (BoxType.GetBoxIsOutput(descriptor)):
-                return BoxType.DigitalOut
+                return BoxType.Digital | BoxType.Output
         
         return BoxType.Complex
 
