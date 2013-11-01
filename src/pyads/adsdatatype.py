@@ -53,24 +53,40 @@ class AdsDatatype:
     @staticmethod
     def GetSize(adsDatatype):
         return AdsDatatype.__sizemapping__.get(adsDatatype, 0)
-        
+    
+    
+    @staticmethod
+    def GetPackFormat(adsDatatype):
+        return AdsDatatype.__packmapping__.get(adsDatatype, None)
+           
     
     @staticmethod
     def Pack(value, adsDatatype):
 
-        packFmt = AdsDatatype.__packmapping__.get(adsDatatype, None)
+        packFmt = AdsDatatype.GetPackFormat(adsDatatype)
         
         if(packFmt != None):
             return struct.pack(packFmt, value)
         else:
             return value
+        
+        
+    @staticmethod
+    def PackInto(value, adsDatatype, buf, offset):
+        
+        packFmt = AdsDatatype.GetPackFormat(adsDatatype)
+        
+        if(packFmt == None):
+            raise Exception("no pack fmt")
+        
+        struct.pack_into(packFmt, buf, offset, value)
 
     
     
     @staticmethod
     def Unpack(value, adsDatatype):
         
-        packFmt = AdsDatatype.__packmapping__.get(adsDatatype, None)
+        packFmt = AdsDatatype.GetPackFormat(adsDatatype)
         
         if(packFmt != None):
             return struct.unpack(packFmt, value)[0]
