@@ -22,8 +22,19 @@ class SymbolInfo:
     AdsDatatype = AdsDatatype.Custom
     
     
-    def WriteDown(self, processImage, value):
+    def WriteToBuffer(self, byteBuffer, value):
         
-        AdsDatatype.PackInto(value, self.AdsDatatype, processImage, self.IndexOffset)
+        # byte shift needed, if bool!
+        if (self.AdsDatatype == AdsDatatype.Bool):
+            currentByte = AdsDatatype.UnPackFrom(AdsDatatype.UInt8, byteBuffer, self.IndexOffset)
+            if (value):
+                newByte = currentByte | (1 << self.BitOffset)
+            else:
+                newByte = currentByte ^ (1 << self.BitOffset)
+                
+            AdsDatatype.PackInto(AdsDatatype.UInt8, byteBuffer, self.IndexOffset, newByte)
+        
+        else:
+            AdsDatatype.PackInto(self.AdsDatatype, byteBuffer, self.IndexOffset, value)
                 
         

@@ -1,5 +1,6 @@
 import string
 from binaryparser import BinaryParser
+import pyads
 
 class AmsPacket():
     
@@ -122,20 +123,6 @@ class AmsPacket():
         return result
     
     
-    @staticmethod
-    def GetHexStringBlock(data, width = 8):
-        result = ''
-        i = 0
-        
-        for c in data:
-            if (i == width):
-                result += "\n"
-                i = 0                
-
-            result += "%02x " % ord(c)
-            i += 1
-        
-        return result
         
     
     def __str__(self):
@@ -150,7 +137,7 @@ class AmsPacket():
         if (len(self.Data) == 0):
             result += "Packet contains no data.\n"
         else:
-            result += "Data:\n%s\n" % AmsPacket.GetHexStringBlock(self.Data) 
+            result += "Data:\n%s\n" % pyads.HexBlock(self.Data) 
         
         return result   
         

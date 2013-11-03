@@ -72,15 +72,25 @@ class AdsDatatype:
         
         
     @staticmethod
-    def PackInto(value, adsDatatype, buf, offset):
+    def PackInto(adsDatatype, byteBuffer, offset, value):
         
         packFmt = AdsDatatype.GetPackFormat(adsDatatype)
         
         if(packFmt == None):
-            raise Exception("no pack fmt")
+            raise Exception("no pack format found.")
         
-        struct.pack_into(packFmt, buf, offset, value)
+        struct.pack_into(packFmt, byteBuffer, offset, value)
 
+
+    @staticmethod
+    def UnPackFrom(adsDatatype, byteBuffer, offset):
+        
+        packFmt = AdsDatatype.GetPackFormat(adsDatatype)
+        
+        if(packFmt == None):
+            raise Exception("no pack format found.")
+        
+        return struct.unpack_from(packFmt, byteBuffer, offset)[0]
     
     
     @staticmethod

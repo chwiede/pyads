@@ -1,6 +1,8 @@
+import ctypes
 import struct
-from .. import AmsPacket
 from adsresponse import AdsResponse
+from .. import adstools
+
 
 class ReadResponse(AdsResponse):
     
@@ -18,6 +20,10 @@ class ReadResponse(AdsResponse):
     
     def __str__(self):
         result = "AdsReadResponse:\n"
-        result += AmsPacket.GetHexStringBlock(self.Data)
+        result += adstools.HexBlock(self.Data)
         return result
+    
+    
+    def CreateBuffer(self):
+        return ctypes.create_string_buffer(self.Data, len(self.Data))                
                 

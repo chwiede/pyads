@@ -8,9 +8,8 @@ __all__ = [
     "AmsPacket", 
     "BinaryParser", 
     "SymbolInfo",
-    "SoftSPS" 
+    "SoftSPS"
 ]
-
 
 from adsdatatype import *
 from adsexception import * 
@@ -21,4 +20,5 @@ from adsconnection import *
 from adsclient import *
 from adsdevice import *
 from symbolinfo import *
-from softsps import SoftSPS
+from softsps import *
+from adstools import *
