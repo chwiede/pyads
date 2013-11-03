@@ -15,3 +15,7 @@ class ProcessImage:
     
     def Read(self, adsClient):
         self.ByteBuffer = adsClient.Read(self.IndexGroup, 0, self.Length).CreateBuffer()
+        
+        
+    def Write(self, adsClient):
+        adsClient.Write(self.IndexGroup, 0, self.ByteBuffer.raw)

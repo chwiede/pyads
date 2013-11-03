@@ -1,5 +1,4 @@
 import math
-from mercurial.fileset import unknown
 
 class BoxType():
     
