@@ -83,7 +83,7 @@ class AdsDatatype:
 
 
     @staticmethod
-    def UnPackFrom(adsDatatype, byteBuffer, offset):
+    def UnpackFrom(adsDatatype, byteBuffer, offset):
         
         packFmt = AdsDatatype.GetPackFormat(adsDatatype)
         

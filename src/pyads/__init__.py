@@ -6,7 +6,8 @@ __all__ = [
     "AdsException", 
     "AdsState", 
     "AmsPacket", 
-    "BinaryParser", 
+    "BinaryParser",
+    "ProcessImage", 
     "SymbolInfo",
     "SoftSPS"
 ]
@@ -22,3 +23,4 @@ from adsdevice import *
 from symbolinfo import *
 from softsps import *
 from adstools import *
+from processimage import *

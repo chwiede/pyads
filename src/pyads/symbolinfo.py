@@ -26,7 +26,7 @@ class SymbolInfo:
         
         # byte shift needed, if bool!
         if (self.AdsDatatype == AdsDatatype.Bool):
-            currentByte = AdsDatatype.UnPackFrom(AdsDatatype.UInt8, byteBuffer, self.IndexOffset)
+            currentByte = AdsDatatype.UnpackFrom(AdsDatatype.UInt8, byteBuffer, self.IndexOffset)
             if (value):
                 newByte = currentByte | (1 << self.BitOffset)
             else:
@@ -36,5 +36,13 @@ class SymbolInfo:
         
         else:
             AdsDatatype.PackInto(self.AdsDatatype, byteBuffer, self.IndexOffset, value)
-                
+            
+            
+            
+    def ReadFrom(self, byteBuffer):
         
+        if (self.AdsDatatype == AdsDatatype.Bool):
+            result = AdsDatatype.UnpackFrom(AdsDatatype.UInt8, byteBuffer, self.IndexOffset)
+            return ((result & (1 << self.BitOffset)) == True)
+        else:
+            return AdsDatatype.UnpackFrom(self.AdsDatatype, byteBuffer, self.IndexOffset)            
