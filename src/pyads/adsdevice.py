@@ -11,8 +11,8 @@ class AdsDevice(AdsClient):
 
     def __init__(self, adsConnection):
         AdsClient.__init__(self, adsConnection)
-
-
+        
+        
     def GetSymbolHandle(self, variableName):
         symbolData = self.ReadWrite(0xF003, 0x0000, 4, variableName + '\x00').Data
         symbolHandle = struct.unpack("I", symbolData)[0]
@@ -55,7 +55,22 @@ class AdsDevice(AdsClient):
             
 
     def GetBoxes(self):
+        totalOffsetIn = 0
+        totalOffsetOut = 0
         descriptors = self.GetBoxDescriptors()
-        return map(lambda b: boxes.Create(b), descriptors)
+        
+        result = []
+        
+        for descriptor in descriptors:
+            box = boxes.Create(descriptor)
+            box.OffsetIn = totalOffsetIn
+            box.OffsetOut = totalOffsetOut
+            
+            result.append(box)
+            
+            totalOffsetIn += box.SizeIn
+            totalOffsetOut += box.SizeOut
+            
+        return result
             
                 

@@ -5,7 +5,7 @@ class SymbolInfo:
     
     def __init__(self, name, indexGroup, indexOffset, adsDatatype, bitOffset = 0):
         self.Name = name
-        self.IndexGroup = indexGroup,
+        self.IndexGroup = indexGroup
         self.IndexOffset = indexOffset
         self.AdsDatatype = adsDatatype
         self.BitOffset = bitOffset
@@ -46,3 +46,8 @@ class SymbolInfo:
             return ((result & (1 << self.BitOffset)) == True)
         else:
             return AdsDatatype.UnpackFrom(self.AdsDatatype, byteBuffer, self.IndexOffset)            
+        
+    
+    
+    def __str__(self):
+        return "%s (%08x, %08x)" % (self.Name, self.IndexGroup, self.IndexOffset)

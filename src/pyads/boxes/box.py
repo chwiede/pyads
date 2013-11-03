@@ -7,7 +7,9 @@ class Box():
         self.BoxType = BoxType.GetBoxType(descriptor)
         
         
-    Offset = 0        
+    OffsetIn = 0
+    
+    OffsetOut = 0        
     
     SizeIn = 0
     
@@ -36,7 +38,10 @@ class Box():
     @property
     def IsOutput(self):
         return (self.BoxType & 0b10000010) == 2
-
+    
+    
+    def CreateSymbolInfos(self):
+        return []
         
     
     def __str__(self):

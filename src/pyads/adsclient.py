@@ -15,7 +15,11 @@ class AdsClient:
     
     AdsConnection = None    
     
-    AdsPortDefault = 0xBF02    
+    AdsPortDefault = 0xBF02
+    
+    AdsIndexGroupIn = 0xF020
+    
+    AdsIndexGroupOut = 0xF030    
     
     AdsChunkSizeDefault = 1024    
     
@@ -143,7 +147,7 @@ class AdsClient:
         while (self._CurrentPacket == None):
             timeout += 0.001
             time.sleep(0.001)
-            if (timeout > 3):
+            if (timeout > 10):
                 raise Exception("Timout: could not receive ADS Answer!")
         
         return self._CurrentPacket                    

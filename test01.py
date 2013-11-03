@@ -28,6 +28,10 @@ print("%0.1fms" % ((time.time() - t) / 20.0 * 1000))
 
 for box in adsDevice.GetBoxes():
     print("-> %s" % box)
+    print("   Offset %s/%s In/Out" % (box.OffsetIn, box.OffsetOut))
+    vars = box.CreateSymbolInfos()
+    for v in vars:
+        print v
 
 
 

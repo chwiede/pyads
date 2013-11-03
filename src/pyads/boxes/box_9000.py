@@ -4,8 +4,8 @@ class Box9000(Box):
     
     def __init__(self, descriptor):
         Box.__init__(self, descriptor)
-        self.SizeIn = 8
-        self.SizeOut = 8
+        self.SizeIn = 0
+        self.SizeOut = 0
         self.BoxType = BoxType.Complex | BoxType.Input | BoxType.Output
 
 

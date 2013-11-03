@@ -2,13 +2,13 @@
 
 import binascii
 import ctypes
+import struct
 import time
 from src.pyads import *  
 from src.pyads.boxes import *
 
 targetAms = "192.168.50.107.1.1:800"
 sourceAms = "192.168.50.106.1.1:801"
-
 
 
 ads = AdsDevice(AdsConnection(targetAms, sourceAms))

@@ -1,5 +1,8 @@
 from box import Box
 from boxtype import BoxType
+from .. import AdsDatatype
+from .. import AdsClient
+from .. import symbolinfo
 
 class BoxDigital(Box):
     
@@ -16,9 +19,30 @@ class BoxDigital(Box):
         
     Channels = 0
     
-    
-    #def __str__(self):        
-    #    mode = "Input" if BoxType.GetBoxIsInput(self.Descriptor) else "Output"        
-    #    return "Digital %s Box (%s Channels)" % (mode, self.Channels)        
-    
+    def CreateSymbolInfos(self):
+        result = []
+        
+        if (self.IsInput):
+            for c in range(self.Channels):
+                result.append(symbolinfo.SymbolInfo(
+                    "In%s" % c,
+                    AdsClient.AdsIndexGroupIn,
+                    self.OffsetIn,
+                    AdsDatatype.Bool,
+                    c                    
+                ))
+        
+        if (self.IsOutput):
+            for c in range(self.Channels):
+                result.append(symbolinfo.SymbolInfo(
+                    "Out%s" % c,
+                    AdsClient.AdsIndexGroupOut,
+                    self.OffsetIn,
+                    AdsDatatype.Bool,
+                    c                    
+                ))
+
+        return result
+                           
+        
     
