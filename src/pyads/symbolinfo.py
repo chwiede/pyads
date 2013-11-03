@@ -30,7 +30,7 @@ class SymbolInfo:
             if (value):
                 newByte = currentByte | (1 << self.BitOffset)
             else:
-                newByte = currentByte ^ (1 << self.BitOffset)
+                newByte = currentByte & ~(1 << self.BitOffset) & 0xF
                 
             AdsDatatype.PackInto(AdsDatatype.UInt8, byteBuffer, self.IndexOffset, newByte)
         
