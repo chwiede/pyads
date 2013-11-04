@@ -1,8 +1,8 @@
-from box import Box
-from boxtype import BoxType
+from box import Box, BoxType
+
 from .. import AdsDatatype
 from .. import AdsClient
-from .. import symbolinfo
+from .. import SymbolInfo
 
 class BoxDigital(Box):
     
@@ -24,7 +24,7 @@ class BoxDigital(Box):
         
         if (self.IsInput):
             for c in range(self.Channels):
-                result.append(symbolinfo.SymbolInfo(
+                result.append(SymbolInfo(
                     "In%s" % c,
                     AdsClient.AdsIndexGroupIn,
                     self.OffsetIn,
@@ -34,7 +34,7 @@ class BoxDigital(Box):
         
         if (self.IsOutput):
             for c in range(self.Channels):
-                result.append(symbolinfo.SymbolInfo(
+                result.append(SymbolInfo(
                     "Out%s" % c,
                     AdsClient.AdsIndexGroupOut,
                     self.OffsetIn,

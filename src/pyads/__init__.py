@@ -12,6 +12,7 @@ __all__ = [
     "SoftSPS"
 ]
 
+from symbolinfo import *
 from adsdatatype import *
 from adsexception import * 
 from adsstate import *
@@ -20,7 +21,6 @@ from binaryparser import *
 from adsconnection import *
 from adsclient import *
 from adsdevice import *
-from symbolinfo import *
 from softsps import *
 from adstools import *
 from processimage import *

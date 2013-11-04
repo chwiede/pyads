@@ -1,6 +1,8 @@
 #!/usr/bin/python2
 
+import binascii
 import time
+import struct
 from src.pyads import *  
 from src.pyads.boxes import *
 
@@ -29,12 +31,9 @@ print("%0.1fms" % ((time.time() - t) / 20.0 * 1000))
 for box in adsDevice.GetBoxes():
     print("-> %s" % box)
     print("   Offset %s/%s In/Out" % (box.OffsetIn, box.OffsetOut))
-    vars = box.CreateSymbolInfos()
-    for v in vars:
-        print v
+    syms = box.CreateSymbolInfos()
+    for sym in syms:
+        print("   %s" % sym)
 
-
-
-adsDevice.Close()
 
 print("ready & bye!")
