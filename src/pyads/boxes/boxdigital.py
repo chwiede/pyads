@@ -25,7 +25,7 @@ class BoxDigital(Box):
         if (self.IsInput):
             for c in range(self.Channels):
                 result.append(SymbolInfo(
-                    "In%s" % c,
+                    "channel%s" % c,
                     AdsClient.AdsIndexGroupIn,
                     self.OffsetIn,
                     AdsDatatype.Bool,
@@ -35,9 +35,9 @@ class BoxDigital(Box):
         if (self.IsOutput):
             for c in range(self.Channels):
                 result.append(SymbolInfo(
-                    "Out%s" % c,
+                    "channel%s" % c,
                     AdsClient.AdsIndexGroupOut,
-                    self.OffsetIn,
+                    self.OffsetOut,
                     AdsDatatype.Bool,
                     c                    
                 ))

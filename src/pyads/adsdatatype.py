@@ -18,47 +18,37 @@ class AdsDatatype:
     String = 0x0C
     
     
-    __packmapping__ = {
-        Int8: 'b',
-        UInt8: 'B',
-        Int16: 'h',
-        UInt16: 'H',
-        Int32: 'i',
-        UInt32: 'I',
-        Int64: 'q',
-        UInt64: 'Q',
-        Float: 'f',
-        Double: 'd',
-        Bool: '?',
-        String: None
+    __infomapping__ = {
+        Int8:   ('b', 1, 'Int8'),
+        UInt8:  ('B', 1, 'UInt8'), 
+        Int16:  ('h', 2, 'Int16'),
+        UInt16: ('H', 2, 'UInt16'), 
+        Int32:  ('i', 4, 'Int32'),
+        UInt32: ('I', 4, 'UInt32'),
+        Int64:  ('q', 8, 'Int64'),
+        UInt64: ('Q', 8, 'UInt64'),
+        Float:  ('f', 4, 'Float'),
+        Double: ('d', 8, 'Double'),
+        Bool:   ('?', 1, 'Bool'),
+        String: (None, 80, 'String')
     }
     
-    
-    __sizemapping__ = {
-        Int8: 1,
-        UInt8: 1,
-        Int16: 2,
-        UInt16: 2,
-        Int32: 4,
-        UInt32: 4,
-        Int64: 8,
-        UInt64: 8,
-        Float: 4,
-        Double: 8,
-        Bool: 1,
-        String: 80
-    }
-    
-    
-    @staticmethod
-    def GetSize(adsDatatype):
-        return AdsDatatype.__sizemapping__.get(adsDatatype, 0)
-    
+  
     
     @staticmethod
     def GetPackFormat(adsDatatype):
-        return AdsDatatype.__packmapping__.get(adsDatatype, None)
+        return AdsDatatype.__infomapping__.get(adsDatatype)[0]
            
+    
+    @staticmethod
+    def GetSize(adsDatatype):
+        return AdsDatatype.__infomapping__.get(adsDatatype)[1]
+    
+    
+    @staticmethod
+    def GetName(adsDatatype):
+        return AdsDatatype.__infomapping__.get(adsDatatype)[2]
+
     
     @staticmethod
     def Pack(value, adsDatatype):

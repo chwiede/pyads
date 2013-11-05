@@ -46,7 +46,8 @@ while 1:
         oldswitch = switch
         
         
-        var2.WriteToBuffer(procOut.ByteBuffer, lamp)
+        var2.Value = lamp
+        var2.WriteTo(procOut.ByteBuffer)
         
         
         procOut.Write(ads)

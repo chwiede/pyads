@@ -21,6 +21,6 @@ class Box2512(Box):
         
         for i in range(2):
             offset = self.OffsetIn + i*4 + 2 
-            result.append(SymbolInfo("Chn%s" % i, AdsClient.AdsIndexGroupOut, offset, AdsDatatype.UInt16))
+            result.append(SymbolInfo("pwm%s" % i, AdsClient.AdsIndexGroupOut, offset, AdsDatatype.UInt16))
         
         return result
