@@ -1,6 +1,6 @@
 import struct
 from .. import AmsPacket
-from adsresponse import AdsResponse
+from .adsresponse import AdsResponse
 
 class ReadWriteResponse(AdsResponse):
     

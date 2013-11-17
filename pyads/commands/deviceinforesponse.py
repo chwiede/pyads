@@ -1,5 +1,5 @@
 import struct
-from adsresponse import AdsResponse
+from .adsresponse import AdsResponse
 
 class DeviceInfoResponse(AdsResponse):
     
@@ -9,7 +9,7 @@ class DeviceInfoResponse(AdsResponse):
         self.MajorVersion = struct.unpack_from('B', responseAmsPacket.Data, 4)[0]
         self.MinorVersion = struct.unpack_from('B', responseAmsPacket.Data, 5)[0]
         self.Build = struct.unpack_from('H', responseAmsPacket.Data, 6)[0]
-        self.DeviceName = responseAmsPacket.Data[8:].strip(' \t\n\r\x00')
+        self.DeviceName = responseAmsPacket.Data[8:].decode("ascii").strip(' \t\n\r\x00')
         
         
     MajorVersion = 0

@@ -1,5 +1,4 @@
-import string
-from binaryparser import BinaryParser
+from .binaryparser import BinaryParser
 import pyads
 
 class AmsPacket():
@@ -40,7 +39,7 @@ class AmsPacket():
     InvokeID = 0
     """free choosable number to identify request<->response  (4 bytes, UInt32)"""
     
-    Data = ''
+    Data = b''
     """the ads-data to transmit"""
     
     
@@ -57,7 +56,7 @@ class AmsPacket():
         for bt in byteList:
             words.append("%s" % ord(bt))
         
-        return string.join(words, ".")
+        return ".".join(words)
     
     
     

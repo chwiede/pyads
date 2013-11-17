@@ -2,12 +2,12 @@ from struct import pack, unpack_from, calcsize
 
 class BinaryParser:
     
-    def __init__(self, byteData = ''):
+    def __init__(self, byteData = b''):
         self.ByteData = byteData
         self.Position = 0
         
         
-    ByteData = ''
+    ByteData = b''
     
     Position = 0
         

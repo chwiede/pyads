@@ -1,5 +1,5 @@
-from adscommand import AdsCommand
-from readstateresponse import ReadStateResponse
+from .adscommand import AdsCommand
+from .readstateresponse import ReadStateResponse
 
 class ReadStateCommand(AdsCommand):
     

@@ -1,5 +1,5 @@
 import struct
-from adsresponse import AdsResponse
+from .adsresponse import AdsResponse
 
 class WriteControlResponse(AdsResponse):
     

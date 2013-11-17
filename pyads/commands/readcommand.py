@@ -1,6 +1,6 @@
 import struct
-from adscommand import AdsCommand
-from readresponse import ReadResponse
+from .adscommand import AdsCommand
+from .readresponse import ReadResponse
 
 class ReadCommand(AdsCommand):
     

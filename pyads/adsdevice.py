@@ -1,9 +1,9 @@
 import copy
 import struct
-from adsclient import AdsClient
-from adsdatatype import AdsDatatype
-from adsconnection import AdsConnection
-from binaryparser import BinaryParser
+from .adsclient import AdsClient
+from .adsdatatype import AdsDatatype
+from .adsconnection import AdsConnection
+from .binaryparser import BinaryParser
 
 class AdsDevice(AdsClient):
 

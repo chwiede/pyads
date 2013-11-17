@@ -3,9 +3,9 @@ import select
 import socket
 import struct
 import threading
-from amspacket import AmsPacket
-from adsconnection import AdsConnection
-from commands import *
+from .amspacket import AmsPacket
+from .adsconnection import AdsConnection
+from .commands import *
 
 class AdsClient:
     
@@ -19,6 +19,8 @@ class AdsClient:
         else:
             raise Exception('You must specify either connection or adsTarget, not both.')
     
+    
+    Debug = False
     
     AdsConnection = None    
     
@@ -96,7 +98,7 @@ class AdsClient:
             return None
         
         # first two bits must be 0
-        if (response[0:2] != '\x00\x00'):
+        if (response[0:2] != b'\x00\x00'):
             return None
         
         # read whole data length
@@ -152,6 +154,10 @@ class AdsClient:
         self._CurrentPacket = None
         amspacket.InvokeID = self._CurrentInvokeID
         
+        if self.Debug:
+            print(">>> sending ams-packet:")
+            print(amspacket)
+        
         
         
     def AwaitCommandInvoke(self):
@@ -162,6 +168,10 @@ class AdsClient:
             time.sleep(0.001)
             if (timeout > 10):
                 raise Exception("Timout: could not receive ADS Answer!")
+        
+        if self.Debug:
+            print("<<< received ams-packet:")
+            print(self._CurrentPacket)        
         
         return self._CurrentPacket                    
         

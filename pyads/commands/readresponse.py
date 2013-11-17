@@ -1,6 +1,6 @@
 import ctypes
 import struct
-from adsresponse import AdsResponse
+from .adsresponse import AdsResponse
 from .. import adstools
 
 

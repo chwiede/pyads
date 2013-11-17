@@ -1,5 +1,5 @@
-from adscommand import AdsCommand
-from deviceinforesponse import DeviceInfoResponse
+from .adscommand import AdsCommand
+from .deviceinforesponse import DeviceInfoResponse
 
 class DeviceInfoCommand(AdsCommand):
     
@@ -8,7 +8,7 @@ class DeviceInfoCommand(AdsCommand):
         
         
     def CreateRequest(self):
-        return ''
+        return b''
     
     
     def CreateResponse(self, responsePacket):

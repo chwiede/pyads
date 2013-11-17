@@ -1,6 +1,6 @@
 import struct
-from adscommand import AdsCommand
-from readwriteresponse import ReadWriteResponse
+from .adscommand import AdsCommand
+from .readwriteresponse import ReadWriteResponse
 
 class ReadWriteCommand(AdsCommand):
     

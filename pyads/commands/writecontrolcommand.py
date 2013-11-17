@@ -1,6 +1,6 @@
 import struct
-from adscommand import AdsCommand
-from writecontrolresponse import WriteControlResponse
+from .adscommand import AdsCommand
+from .writecontrolresponse import WriteControlResponse
 
 class WriteControlCommand(AdsCommand):
     

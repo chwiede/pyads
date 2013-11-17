@@ -4,6 +4,7 @@ from pyads import *
 
 
 with AdsDevice(amsTarget="192.168.50.107.1.1:800") as device:
-    print device
+    device.Debug = True
+    
     info = device.ReadDeviceInfo()
     print(info)

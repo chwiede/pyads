@@ -5,18 +5,22 @@ __all__ = [
     "AdsDevice", 
     "AdsException", 
     "AdsState", 
+    
+    "amspacket",
     "AmsPacket", 
     "BinaryParser",
     "SymbolInfo",
 ]
 
-from symbolinfo import *
-from adsdatatype import *
-from adsexception import * 
-from adsstate import *
-from amspacket import *
-from binaryparser import *
-from adsconnection import *
-from adsclient import *
-from adsdevice import *
-from adstools import *
+from pyads.amspacket import AmsPacket
+
+from pyads.symbolinfo import *
+from pyads.adsdatatype import *
+from pyads.adsexception import * 
+from pyads.adsstate import *
+from pyads.amspacket import *
+from pyads.binaryparser import *
+from pyads.adsconnection import *
+from pyads.adsclient import *
+from pyads.adsdevice import *
+from pyads.adstools import *

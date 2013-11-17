@@ -1,4 +1,4 @@
-from adsdatatype import AdsDatatype
+from .adsdatatype import AdsDatatype
 
 class SymbolInfo:
     
