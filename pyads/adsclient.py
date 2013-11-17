@@ -45,10 +45,13 @@ class AdsClient:
     def Connect(self):
         self.Close()
         self.Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.Socket.settimeout(3)
-        self.Socket.connect((self.AdsConnection.TargetIP, self.AdsPortDefault))
+        self.Socket.settimeout(2)
         
-        self._BeginAsyncRead()        
+        try:        
+            self.Socket.connect((self.AdsConnection.TargetIP, self.AdsPortDefault))        
+            self._BeginAsyncRead()
+        except Exception:
+            raise Exception("Could not connect to device!")        
         
     
     
@@ -58,9 +61,11 @@ class AdsClient:
         
         
     def _AsyncRead(self):
-        while (self.IsConnected):
+        
+        while self.IsConnected:
             ready = select.select([self.Socket], [], [], 0.1)
-            if (ready[0]):
+            
+            if ready[0] and self.IsConnected:
                 try:
                     newPacket = self.ReadAmsPacketFromSocket()
                     if (newPacket.InvokeID == self._CurrentInvokeID):
@@ -106,7 +111,8 @@ class AdsClient:
     
     
     def SendAndRecv(self, amspacket):        
-        if (self.Socket == None):
+        
+        if not self.IsConnected:
             self.Connect()
         
         # prepare packet with invoke id 
