@@ -2,12 +2,15 @@ import re
 
 class AdsConnection:
     
-    def __init__(self, targetAms='0.0.0.0.0.0:0', sourceAms='0.0.0.0.0.0:32780'):
+    def __init__(self, targetAms='0.0.0.0.0.0:0', sourceAms=None):
         
         targetAmsInfo = self.ParseAmsIdPort(targetAms)
         self.TargetIP = targetAmsInfo[0]
         self.TargetAmsID = targetAmsInfo[1]
         self.TargetAmsPort = targetAmsInfo[2]
+        
+        if sourceAms == None:
+            sourceAms = self.GetDefaultSourceAms()
         
         sourceAmsInfo = self.ParseAmsIdPort(sourceAms)
         self.SourceAmsID = sourceAmsInfo[1]
@@ -35,6 +38,10 @@ class AdsConnection:
     
     SourceAmsID = ''
     SourceAmsPort = 0
+    
+    
+    def GetDefaultSourceAms(self):
+        return '0.0.0.0.0.0:32905'
 
     
     def __str__(self):

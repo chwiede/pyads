@@ -7,8 +7,8 @@ from binaryparser import BinaryParser
 
 class AdsDevice(AdsClient):
 
-    def __init__(self, adsConnection):
-        AdsClient.__init__(self, adsConnection)
+    def __init__(self, adsConnection = None, amsTarget = None, amsSource = None):
+        AdsClient.__init__(self, adsConnection, amsTarget, amsSource)
         
         
     def GetSymbolHandle(self, variableName):

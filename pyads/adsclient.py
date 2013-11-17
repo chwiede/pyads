@@ -4,13 +4,20 @@ import socket
 import struct
 import threading
 from amspacket import AmsPacket
+from adsconnection import AdsConnection
 from commands import *
 
 class AdsClient:
     
-    def __init__(self, adsConnection):
-        self.AdsConnection = adsConnection
-        pass
+    def __init__(self, adsConnection = None, amsTarget = None, amsSource = None):
+        if adsConnection != None and amsTarget == None and amsSource == None:
+            self.AdsConnection = adsConnection
+
+        elif amsTarget != None and adsConnection == None:
+            self.AdsConnection = AdsConnection(amsTarget, amsSource)            
+                    
+        else:
+            raise Exception('You must specify either connection or adsTarget, not both.')
     
     
     AdsConnection = None    
@@ -191,4 +198,12 @@ class AdsClient:
 
     def ReadWrite(self, indexGroup, indexOffset, readLen, dataToWrite = ''):
         return ReadWriteCommand(indexGroup, indexOffset, readLen, dataToWrite).Execute(self)
+    
+    
+    def __enter__(self):
+        return self
+            
+
+    def __exit__(self, vtype, value, traceback):
+        self.Close()
         
