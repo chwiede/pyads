@@ -18,19 +18,11 @@ An AMS-ID is a free 6-byte long identifier. Mostly IP is contained. See Beckhoff
 
 ```python
 
-from pyads import *
+from pyads import *  
 
-sourceAmsIdPort = "192.168.1.79.1.1:32780"
-targetAmsIdPort = "192.168.1.80.1.1:801"
-
-connection = AdsConnection(targetAmsIdPort, sourceAmsIdPort)
-adsClient = AdsClient(connection)
-
-deviceInfo = adsClient.ReadDeviceInfo()
-
-print(deviceInfo)
-
-adsClient.Close()
+with AdsDevice(amsTarget="192.168.1.79.1.1:800") as device:
+    info = device.ReadDeviceInfo()
+    print(info)
 
 ```
 
