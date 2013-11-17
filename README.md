@@ -5,7 +5,9 @@ Pyads is a pure python implementation for Beckhoff ADS protocol.
 You can send typical ADS-commands like read/write over TCP/IP.
 No other libraries (or TwinCAT on Windows) are needed.
 
-./src/pyads is the main library folder. Copy or add it to your systems python library path.
+Twincat and ADS are developed by Beckhoff (http://www.beckhoff.de). I'm not affiliated in any way.
+
+./pyads is the main library folder. Copy or add it to your systems python library path.
 
 ## Usage
 
