@@ -1,8 +1,6 @@
 import ctypes
 import struct
 from .adsresponse import AdsResponse
-from .. import adstools
-
 
 class ReadResponse(AdsResponse):
     
@@ -20,7 +18,7 @@ class ReadResponse(AdsResponse):
     
     def __str__(self):
         result = "AdsReadResponse:\n"
-        result += adstools.HexBlock(self.Data)
+        result += pyads.HexBlock(self.Data)
         return result
     
     
