@@ -1,5 +1,6 @@
 import ctypes
 import struct
+import pyads
 from .adsresponse import AdsResponse
 
 class ReadResponse(AdsResponse):

@@ -9,7 +9,9 @@ __all__ = [
     "AmsPacket", 
     "BinaryParser",
     "SymbolInfo",
-    "HexBlock"
+    "HexBlock",
+    "AdsIO",
+    "ProcImage"
 ]
 
 from pyads.symbolinfo import *
@@ -21,6 +23,8 @@ from pyads.binaryparser import *
 from pyads.adsconnection import *
 from pyads.adsclient import *
 from pyads.adsdevice import *
+from pyads.adsio import *
+from pyads.procimage import *
 
 
 def HexBlock(data, width = 8):
