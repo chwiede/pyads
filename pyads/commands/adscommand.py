@@ -16,15 +16,21 @@ class AdsCommand:
     
     def CreateResponse(self, responsePacket):
         raise NotImplementedError()
+
+
+    def GetAmsPacket(self, adsConnection):        
+        packet = AmsPacket(adsConnection)
+        packet.CommandID = self.CommandID
+        packet.StateFlags = 0x0004
+        packet.Data = self.CreateRequest()
+        
+        return packet
     
     
     def Execute(self, adsClient):
         
         # create packet
-        packet = AmsPacket(adsClient.AdsConnection)
-        packet.CommandID = self.CommandID
-        packet.StateFlags = 0x0004
-        packet.Data = self.CreateRequest()
+        packet = self.GetAmsPacket(adsClient.AdsConnection)        
         
         # send to client
         responsePacket = adsClient.SendAndRecv(packet)

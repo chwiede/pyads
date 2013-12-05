@@ -9,8 +9,16 @@ class DeviceInfoResponse(AdsResponse):
         self.MajorVersion = struct.unpack_from('B', responseAmsPacket.Data, 4)[0]
         self.MinorVersion = struct.unpack_from('B', responseAmsPacket.Data, 5)[0]
         self.Build = struct.unpack_from('H', responseAmsPacket.Data, 6)[0]
-        self.DeviceName = responseAmsPacket.Data[8:].decode("ascii").strip(' \t\n\r\x00')
         
+        deviceNameEnd = 16
+        for i in range(8, 24):
+            if ord(responseAmsPacket.Data[i]) == 0:
+                deviceNameEnd = i
+                break
+                
+        deviceNameRaw = responseAmsPacket.Data[8:deviceNameEnd]
+        self.DeviceName = deviceNameRaw.decode("latin-1").strip(' \t\n\r')
+
         
     MajorVersion = 0
     
