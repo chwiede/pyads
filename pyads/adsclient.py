@@ -167,7 +167,7 @@ class AdsClient:
             timeout += 0.001
             time.sleep(0.001)
             if (timeout > 10):
-                raise Exception("Timout: could not receive ADS Answer!")
+                raise Exception("Timeout: could not receive ADS Answer!")
         
         if self.Debug:
             print("<<< received ams-packet:")
