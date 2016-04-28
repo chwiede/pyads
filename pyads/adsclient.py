@@ -9,12 +9,12 @@ from .commands import *
 
 class AdsClient:
     
-    def __init__(self, adsConnection = None, amsTarget = None, amsSource = None):
+    def __init__(self, adsConnection = None, amsTarget = None, amsSource = None, targetIP = None):
         if adsConnection != None and amsTarget == None and amsSource == None:
             self.AdsConnection = adsConnection
 
         elif amsTarget != None and adsConnection == None:
-            self.AdsConnection = AdsConnection(amsTarget, amsSource)            
+            self.AdsConnection = AdsConnection(amsTarget, amsSource, targetIP)            
                     
         else:
             raise Exception('You must specify either connection or adsTarget, not both.')
