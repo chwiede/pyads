@@ -93,4 +93,5 @@ class AdsException(Exception):
         0x753: "no more symbols in cache",
         0x754: "invalid response received",
         0x755: "sync port is locked",
-    }
+        0x274c: "A socket operation was attempted to an unreachable host",
+}
