@@ -65,8 +65,8 @@ class AdsClient:
         try:
             self.Socket.connect((self.AdsConnection.TargetIP, self.AdsPortDefault))
             self._BeginAsyncRead()
-        except Exception:
-            raise Exception("Could not connect to device!")
+        except socket.error:
+            raise AdsException(0x274c)
 
 
 
@@ -186,7 +186,7 @@ class AdsClient:
             timeout += 0.001
             time.sleep(0.001)
             if (timeout > 10):
-                raise Exception("Timeout: could not receive ADS Answer!")
+                raise AdsException(0x745)
 
         if self.Debug:
             print("<<< received ams-packet:")
