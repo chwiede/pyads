@@ -17,13 +17,14 @@ class AdsDevice(AdsClient):
         return symbolHandle        
 
 
-    def ReadByName(self, variableName, adsDatatype):
+    def ReadByName(self, variableName, adsDatatype, length = None):
         symbolHandle = self.GetSymbolHandle(variableName)
-        return self.ReadByHandle(symbolHandle, adsDatatype)
-        
+        return self.ReadByHandle(symbolHandle, adsDatatype, length)
 
-    def ReadByHandle(self, symbolHandle, adsDatatype):
-        length = AdsDatatype.GetSize(adsDatatype)
+
+    def ReadByHandle(self, symbolHandle, adsDatatype, length = None):
+        if length is None:
+            length = AdsDatatype.GetSize(adsDatatype)
         data = self.Read(0xF005, symbolHandle, length).Data
         return AdsDatatype.Unpack(data, adsDatatype)
 
