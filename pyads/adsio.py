@@ -41,7 +41,7 @@ class AdsIO:
     
     
     def ReadVariables(self, procImage):
-        for si in self._Variables.values():
+        for si in list(self._Variables.values()):
             if si.IndexGroup == procImage.IndexGroup:
                 si.ReadFrom(procImage.ByteBuffer)
     
@@ -52,7 +52,7 @@ class AdsIO:
         
         
     def WriteVariables(self, procImage):
-        for si in self._Variables.values():
+        for si in list(self._Variables.values()):
             if si.IndexGroup == procImage.IndexGroup:
                 si.WriteTo(procImage.ByteBuffer)
     

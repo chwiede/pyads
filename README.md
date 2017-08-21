@@ -9,6 +9,8 @@ Twincat and ADS are developed by Beckhoff (http://www.beckhoff.de). I'm not affi
 
 Pyads does not contain an ADS-router - it's designed for a direct client-server connection.
 
+It supports Python 2.6+ and Python 3.
+
 ### Installation by hand
 
 ```
