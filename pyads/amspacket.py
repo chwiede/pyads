@@ -45,7 +45,7 @@ class AmsPacket():
     
     @staticmethod
     def AmsNetIDToBytes(pointDottedBytes):
-        return map(int, pointDottedBytes.split('.'))
+        return list(map(int, pointDottedBytes.split('.')))
     
 
     

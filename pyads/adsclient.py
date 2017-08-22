@@ -136,7 +136,7 @@ class AdsClient:
         # send tcp-header and ams-data
         try:
             self.Socket.send(self.GetTCPPacket(amspacket))
-        except socket.error, e:
+        except socket.error as e:
             # if i fail Socket.send i try again for 3 times            
             if self.RetryOnFail < self.MAX_RETRY_ON_FAIL:
                 self.RetryOnFail += 1
