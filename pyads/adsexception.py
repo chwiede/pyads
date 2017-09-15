@@ -1,10 +1,10 @@
 class AdsException(Exception):
 
-    
+
     def __init__(self, code):
         self.code = code
 
-    
+
     def __str__(self):
         if(self.code in self.AdsCodeNumbers):
             return repr(self.AdsCodeNumbers[self.code])
@@ -13,15 +13,15 @@ class AdsException(Exception):
 
 
     AdsCodeNumbers = {
-        0x1: "Internal error",      
+        0x1: "Internal error",
         0x2: "No Runtime",
         0x3: "Allocation locked memory error",
         0x4: "Insert mailbox error. Reduce the number of ADS calls",
-        0x5: "Wrong receive HMSG",         
-        0x6: "target port not found",     
-        0x7: "target machine not found",     
-        0x8: "Unknown command ID",         
-        0x9: "Bad task ID",         
+        0x5: "Wrong receive HMSG",
+        0x6: "target port not found",
+        0x7: "target machine not found",
+        0x8: "Unknown command ID",
+        0x9: "Bad task ID",
         0xA: "No IO",
         0xB: "Unknown ADS command",
         0xC: "Win 32 error",
@@ -39,7 +39,7 @@ class AdsException(Exception):
         0x18: "Invalid ADS port",
         0x19: "No memory",
         0x1A: "TCP send error",
-        0x1B: "Host unreachable",        
+        0x1B: "Host unreachable",
         0x700: "error class <device error>",
         0x701: "Service is not supported by server",
         0x702: "invalid index group",

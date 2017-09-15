@@ -137,7 +137,7 @@ class AdsClient:
         try:
             self.Socket.send(self.GetTCPPacket(amspacket))
         except socket.error as e:
-            # if i fail Socket.send i try again for 3 times            
+            # if i fail Socket.send i try again for 3 times
             if self.RetryOnFail < self.MAX_RETRY_ON_FAIL:
                 self.RetryOnFail += 1
                 # if i have a BROKEN PIPE error i reconnect
