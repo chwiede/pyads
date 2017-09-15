@@ -137,7 +137,7 @@ class AdsClient:
         try:
             self.Socket.send(self.GetTCPPacket(amspacket))
         except socket.error as e:
-            # if i fail Socket.send i try again for 3 times            
+            # if i fail Socket.send i try again for 3 times
             if self.RetryOnFail < self.MAX_RETRY_ON_FAIL:
                 self.RetryOnFail += 1
                 # if i have a BROKEN PIPE error i reconnect
@@ -213,7 +213,7 @@ class AdsClient:
         return ReadStateCommand().Execute(self)
 
 
-    def WriteControl(self, adsState, deviceState, data = ''):
+    def WriteControl(self, adsState, deviceState, data = b''):
         return WriteControlCommand(adsState, deviceState, data).Execute(self)
 
 
@@ -225,7 +225,7 @@ class AdsClient:
         raise NotImplementedError()
 
 
-    def ReadWrite(self, indexGroup, indexOffset, readLen, dataToWrite = ''):
+    def ReadWrite(self, indexGroup, indexOffset, readLen, dataToWrite = b''):
         return ReadWriteCommand(indexGroup, indexOffset, readLen, dataToWrite).Execute(self)
 
 
