@@ -16,7 +16,6 @@ class ReadResponse(AdsResponse):
 
     Data = b'0'
 
-
     def __str__(self):
         result = "AdsReadResponse:\n"
         result += pyads.HexBlock(self.Data)
