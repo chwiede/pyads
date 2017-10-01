@@ -12,7 +12,7 @@ class AdsDevice(AdsClient):
 
 
     def GetSymbolHandle(self, variableName):
-        symbolData = self.ReadWrite(0xF003, 0x0000, 4, variableName + '\x00').Data
+        symbolData = self.ReadWrite(0xF003, 0x0000, 4, variableName.encode('ascii') + b'\x00').Data
         symbolHandle = struct.unpack("I", symbolData)[0]
         return symbolHandle
 

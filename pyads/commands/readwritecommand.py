@@ -4,7 +4,7 @@ from .readwriteresponse import ReadWriteResponse
 
 class ReadWriteCommand(AdsCommand):
 
-    def __init__(self, indexGroup, indexOffset, readLen, dataToWrite = ''):
+    def __init__(self, indexGroup, indexOffset, readLen, dataToWrite = b''):
         self.CommandID = 0x0009
         self.IndexGroup = indexGroup
         self.IndexOffset = indexOffset
@@ -19,7 +19,7 @@ class ReadWriteCommand(AdsCommand):
 
     ReadLen = 0
 
-    Data = ''
+    Data = b''
 
 
     def CreateRequest(self):

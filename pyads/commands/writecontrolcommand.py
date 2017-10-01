@@ -4,7 +4,7 @@ from .writecontrolresponse import WriteControlResponse
 
 class WriteControlCommand(AdsCommand):
 
-    def __init__(self, adsState, deviceState, data = ''):
+    def __init__(self, adsState, deviceState, data = b''):
         self.CommandID = 0x0005
         self.AdsState = adsState
         self.DeviceState = deviceState
@@ -13,7 +13,7 @@ class WriteControlCommand(AdsCommand):
 
     AdsState = 0
     DeviceState = 0
-    Data = ''
+    Data = b''
 
 
     def CreateRequest(self):

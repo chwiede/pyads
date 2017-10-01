@@ -13,7 +13,7 @@ class ReadWriteResponse(AdsResponse):
 
     Length = 0
 
-    Data = '0'
+    Data = b'0'
 
 
     def __str__(self):

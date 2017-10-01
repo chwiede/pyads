@@ -8,7 +8,7 @@ class ReadStateCommand(AdsCommand):
 
 
     def CreateRequest(self):
-        return ''
+        return b''
 
 
     def CreateResponse(self, responsePacket):

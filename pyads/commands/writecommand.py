@@ -16,7 +16,7 @@ class WriteCommand(AdsCommand):
 
     IndexOffset = 0
 
-    Data = ''
+    Data = b''
 
 
     def CreateRequest(self):
