@@ -23,7 +23,7 @@ from distutils.core import setup
 
 setup(
     name='chwiede.pyads',
-    version='0.1.1',
+    version='0.1.2',
     description='python implementation of ADS protocol',
     url='http://www.github.com/chwiede/pyads',
 
