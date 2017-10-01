@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Pip package for pyads
+"""Pip package for chwiede.pyads
 See:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/chwiede/pyads
@@ -22,7 +22,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 from distutils.core import setup
 
 setup(
-    name='pyads',
+    name='chwiede.pyads',
     version='0.1.1',
     description='python implementation of ADS protocol',
     url='http://www.github.com/chwiede/pyads',
