@@ -1,9 +1,9 @@
 
 class AdsState():
-    
+
     def __init__(self):
         pass
-    
+
     Invalid = 0
     Idle = 1
     Reset = 2
@@ -21,5 +21,4 @@ class AdsState():
     Resume = 14
     Config = 15
     ReConfig = 16
-          
-    
+
