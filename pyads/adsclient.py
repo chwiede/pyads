@@ -78,19 +78,19 @@ class AdsClient:
     def _AsyncRead(self):
 
         while self.IsConnected:
-            ready = select.select([self.Socket], [], [], 0.1)
+            try:
+                ready = select.select([self.Socket], [], [], 0.1)
 
-            if ready[0] and self.IsConnected:
-                try:
-                    newPacket = self.ReadAmsPacketFromSocket()
-                    if (newPacket.InvokeID == self._CurrentInvokeID):
-                        self._CurrentPacket = newPacket
-                    else:
-                        print("Packet dropped:")
-                        print(newPacket)
-                except socket.error:
-                    self.Close()
-                    break
+                if ready[0] and self.IsConnected:
+                        newPacket = self.ReadAmsPacketFromSocket()
+                        if (newPacket.InvokeID == self._CurrentInvokeID):
+                            self._CurrentPacket = newPacket
+                        else:
+                            print("Packet dropped:")
+                            print(newPacket)
+            except (socket.error, select.error):
+                self.Close()
+                break
 
 
 
