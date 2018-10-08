@@ -51,7 +51,7 @@ class AdsClient:
 
     @property
     def IsConnected(self):
-        return self.Socket != None
+        return self.Socket != None and self.Socket.fileno() >= 0
 
 
     def Close(self):
@@ -81,7 +81,6 @@ class AdsClient:
 
     def _AsyncRead(self):
 
-        self._CurrentError = None
         while self.IsConnected:
             try:
                 ready = select.select([self.Socket], [], [], 0.1)
@@ -177,6 +176,7 @@ class AdsClient:
             self._CurrentInvokeID = 0x8000
 
         self._CurrentPacket = None
+        self._CurrentError = None
         amspacket.InvokeID = self._CurrentInvokeID
 
         if self.Debug:
