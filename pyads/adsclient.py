@@ -10,6 +10,9 @@ from .adsconnection import AdsConnection
 from .adsexception import AdsException
 from .commands import *
 
+class InvalidPacket(AdsException):
+    pass
+
 class AdsClient:
 
     def __init__(self, adsConnection = None, amsTarget = None, amsSource = None, targetIP = None):
@@ -44,6 +47,7 @@ class AdsClient:
 
     _CurrentPacket = None
 
+    _CurrentError = None
 
     @property
     def IsConnected(self):
@@ -77,19 +81,21 @@ class AdsClient:
 
     def _AsyncRead(self):
 
+        self._CurrentError = None
         while self.IsConnected:
             try:
                 ready = select.select([self.Socket], [], [], 0.1)
 
                 if ready[0] and self.IsConnected:
-                        newPacket = self.ReadAmsPacketFromSocket()
-                        if (newPacket.InvokeID == self._CurrentInvokeID):
-                            self._CurrentPacket = newPacket
-                        else:
-                            print("Packet dropped:")
-                            print(newPacket)
-            except (socket.error, select.error):
+                    newPacket = self.ReadAmsPacketFromSocket()
+                    if newPacket.InvokeID == self._CurrentInvokeID:
+                        self._CurrentPacket = newPacket
+                    else:
+                        print("Packet dropped:")
+                        print(newPacket)
+            except (socket.error, select.error, InvalidPacket) as e:
                 self.Close()
+                self._CurrentError = e
                 break
 
 
@@ -101,11 +107,11 @@ class AdsClient:
 
         # ensure correct beckhoff tcp header
         if(len(response) < 6):
-            return None
+            raise InvalidPacket('Invalid packet received')
 
         # first two bits must be 0
         if (response[0:2] != b'\x00\x00'):
-            return None
+            raise InvalidPacket('Invalid packet received')
 
         # read whole data length
         dataLen = struct.unpack('I', response[2:6])[0] + 6
@@ -183,6 +189,8 @@ class AdsClient:
         # unfortunately threading.event is slower than this oldschool poll :-(
         timeout = 0
         while (self._CurrentPacket == None):
+            if self._CurrentError:
+                raise self._CurrentError
             timeout += 0.001
             time.sleep(0.001)
             if (timeout > 10):
