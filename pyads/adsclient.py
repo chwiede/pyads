@@ -25,6 +25,8 @@ class AdsClient:
         else:
             raise Exception('You must specify either connection or adsTarget, not both.')
 
+        self.response = b''
+
     MAX_RETRY_ON_FAIL = 3
 
     Debug = False
@@ -101,8 +103,11 @@ class AdsClient:
 
     def ReadAmsPacketFromSocket(self):
 
-        # read default buffer
-        response = self.Socket.recv(self.AdsChunkSizeDefault)
+        # generate packet from cache, or read more data from recv buffer.
+        if len(self.response) == 0:
+            response = self.Socket.recv(self.AdsChunkSizeDefault)
+        else:
+            response = self.response
 
         # ensure correct beckhoff tcp header
         if(len(response) < 6):
@@ -121,7 +126,9 @@ class AdsClient:
             response += self.Socket.recv(nextReadLen)
 
         # cut off tcp-header and return response amspacket
-        return AmsPacket.FromBinaryData(response[6:])
+        packet = AmsPacket.FromBinaryData(response[6:dataLen])
+        self.response = response[dataLen:]
+        return packet
 
 
     def GetTcpHeader(self, amsData):
